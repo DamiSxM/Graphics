@@ -45,6 +45,7 @@ namespace GraphicsDLL
 
             _labyBase = new Bitmap(_tailleMaze * _tailleTiles, _tailleMaze * _tailleTiles);
             _labyItems = new Bitmap(_tailleMaze * _tailleTiles, _tailleMaze * _tailleTiles);
+            _labyPlayers = new Bitmap(_tailleMaze * _tailleTiles, _tailleMaze * _tailleTiles);
 
 
             using (Graphics g = Graphics.FromImage(_labyBase))
@@ -68,7 +69,13 @@ namespace GraphicsDLL
         public void addItem(int x, int y, string nom)
         {
             _items.Add(new Point(x, y), nom);
+            createBitMapItems();
         }
+
+        {
+            // générer l'image items
+        }
+
         public void removeItem(int x, int y)
         {
             _items.Remove(new Point(x, y));
