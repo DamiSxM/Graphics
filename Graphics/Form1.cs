@@ -1,12 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Drawing.Imaging;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using MazeDll;
 using System.Diagnostics;
@@ -17,8 +10,8 @@ namespace GraphicsDLL
     {
         LabyPictureBox labyPic;
         PlayerPictureBox player;
-
         int[,] _maze;
+
         public Form1()
         {
             InitializeComponent();
@@ -35,6 +28,7 @@ namespace GraphicsDLL
         void Initialize()
         {
             labyPic = new LabyPictureBox(_maze, 50, 9, 9);
+            labyPic.PositionChanged += LabyPic_PositionChanged;
             labyPic.Location = new Point(0, 0);
 
             player = new PlayerPictureBox();
@@ -44,6 +38,11 @@ namespace GraphicsDLL
             Controls.Add(player);
 
             player.Parent = labyPic;
+        }
+
+        private void LabyPic_PositionChanged(int x, int y)
+        {
+            Debug.WriteLine(string.Format("X {0}, Y {1}", x, y));
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
@@ -80,10 +79,13 @@ namespace GraphicsDLL
                     labyPic.Warfog(4);
                     break;
                 case Keys.A:
-                    labyPic.addItem(3, 3, "test");
+                    labyPic.addItem(3, 3, "porte1");
                     break;
                 case Keys.Z:
                     labyPic.removeItem(3, 3);
+                    break;
+                case Keys.E:
+                    labyPic.addItem(4, 4, "GrilleFermee");
                     break;
                 case Keys.Q:
                     labyPic.addPlayer("bob", 5, 5);

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
@@ -31,6 +29,10 @@ namespace GraphicsDLL
         int _Y;
 
         int _velocity = 2;
+
+        public delegate void Position(int x, int y);
+        public event Position PositionChanged;
+        void OnPositionChanged(int x, int y) { if (PositionChanged != null) PositionChanged(x, y); }
 
         public int Velocity { get { return _velocity; } set { _velocity = value; } }
         public int X { get { return _X; } set { moveToTile(value, _Y); } }
@@ -93,15 +95,17 @@ namespace GraphicsDLL
         private void createBitMapItems() // générer l'image items
         {
             Point p;
+            string n;
             using (Graphics g = Graphics.FromImage(_labyItems))
             {
                 g.Clear(Color.Transparent);
                 foreach (DictionaryEntry entry in _items)
                 {
                     p = (Point)entry.Key;
+                    n = entry.Value.ToString();
                     p.X = (p.X - 1) * _tailleTiles;
                     p.Y = (p.Y - 1) * _tailleTiles;
-                    Bitmap tmp = new Bitmap(Properties.Resources.porte1);
+                    Bitmap tmp = new Bitmap(Properties.Resources.ResourceManager.GetObject(n) as Image);
                     g.DrawImage(tmp, p);
                 }
             }
@@ -248,6 +252,7 @@ namespace GraphicsDLL
                 _offsetX = (x * _tailleTiles) - _centerX + (_tailleTiles / 2);
                 _offsetY = (y * _tailleTiles) - _centerY + (_tailleTiles / 2);
             }
+            RePaint();
         }
 
         public void GoLeft() { Moving(_offsetX - _velocity, _offsetY); }
@@ -273,12 +278,12 @@ namespace GraphicsDLL
                 if (y > down) _offsetY = down;
                 else _offsetY = y;
             }
+            check_if_XnY_changes();
             RePaint();
         }
 
         public void Mooving(Keys k) // Test....
         {
-            check_if_XnY_changes();
 
             RePaint();
         }
@@ -291,7 +296,7 @@ namespace GraphicsDLL
             {
                 _X = x;
                 _Y = y;
-                // Event PositionChanged
+                OnPositionChanged(x, y); // Event PositionChanged
             }
         }
     }
