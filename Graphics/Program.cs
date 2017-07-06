@@ -16,7 +16,8 @@ namespace GraphicsDLL
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new FormTest());
+            //Application.Run(new Form1());
         }
     }
 }

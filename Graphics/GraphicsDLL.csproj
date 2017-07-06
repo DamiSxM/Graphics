@@ -46,11 +46,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
+    <Compile Include="AffichageWinForm.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="FormTest.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="FormTest.Designer.cs">
+      <DependentUpon>FormTest.cs</DependentUpon>
     </Compile>
     <Compile Include="LabyPictureBox.cs">
       <SubType>Component</SubType>
@@ -60,8 +63,8 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="FormTest.resx">
+      <DependentUpon>FormTest.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -87,6 +90,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\LabyInterfaces\LabyInterfaces\LabyInterfaces.csproj">
+      <Project>{3f6cda15-4d4c-4ee2-a9e2-56a80f9c9e3a}</Project>
+      <Name>LabyInterfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MazeDll\MazeDll.csproj">
       <Project>{edb2dc8e-d6f3-47cd-8fbd-ac21afb582ba}</Project>
       <Name>MazeDll</Name>

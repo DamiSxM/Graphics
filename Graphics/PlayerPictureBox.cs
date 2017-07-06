@@ -35,17 +35,13 @@ namespace GraphicsDLL
         {
             stopThread = false;
             int loop = 0;
+            Thread.Sleep(250);
             do
             {
                 string name;
-                lock (_direction)
-                {
-                    name = _direction + loop.ToString();
-                }
-
+                lock (_direction) name = _direction + loop.ToString();
                 try
                 {
-
                     Image img = Properties.Resources.ResourceManager.GetObject(name) as Image;
                     Image = img;
                 }
@@ -94,10 +90,13 @@ namespace GraphicsDLL
         }
         public void Stop()
         {
-            stopThread = true;
-            th.Join();
-            /*Image = Properties.Resources.ResourceManager.GetObject("Bas0") as Image;
-            Invalidate();*/
+            if (th.IsAlive)
+            {
+                stopThread = true;
+                th.Join();
+            }
+            Image = Properties.Resources.ResourceManager.GetObject("Bas0") as Image;
+            Invalidate();
         }
 
         void RePaint()
@@ -132,6 +131,27 @@ namespace GraphicsDLL
                         break;
                 }
             }
+            Start();
+        }
+
+        public void GoLeft()
+        {
+            lock (_direction) { _direction = "Gauche"; }
+            Start();
+        }
+        public void GoUp()
+        {
+            lock (_direction) { _direction = "Haut"; }
+            Start();
+        }
+        public void GoRight()
+        {
+            lock (_direction) { _direction = "Droite"; }
+            Start();
+        }
+        public void GoDown()
+        {
+            lock (_direction) { _direction = "Bas"; }
             Start();
         }
     }

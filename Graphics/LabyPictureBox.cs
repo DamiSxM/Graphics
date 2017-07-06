@@ -284,7 +284,6 @@ namespace GraphicsDLL
 
         public void Mooving(Keys k) // Test....
         {
-
             RePaint();
         }
 
